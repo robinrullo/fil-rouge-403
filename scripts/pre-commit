@@ -1,15 +1,11 @@
 #!/bin/sh
 
-echo "*****Running unit tests******"
-
+echo "*****Lint Code******"
 git stash -q --keep-index
 
-./gradlew test
-
+./gradlew check
 status=$?
 
 git stash pop -q
-
-echo "*****Done with unit tests******"
 
 exit $status

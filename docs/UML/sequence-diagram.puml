@@ -1,0 +1,22 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+actor Driver as USER
+participant MTRServer
+database PostgreSQL
+
+USER -> MTRServer: Make itinerary for given POIs
+activate USER
+
+activate MTRServer
+MTRServer -> PostgreSQL: Itinerary for given POIs
+activate PostgreSQL
+PostgreSQL --> PostgreSQL: Build optimized itinerary
+PostgreSQL -> MTRServer: Return itinerary for given POIs
+deactivate PostgreSQL
+MTRServer -> USER: Itinerary for given POIs
+deactivate MTRServer
+
+@enduml

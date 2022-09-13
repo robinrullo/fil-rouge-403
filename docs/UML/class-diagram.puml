@@ -1,0 +1,45 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+abstract class FeatureCollection {
+  +GeoJSONFeatureCollection toGeoJSON()
+  ---
+  #Feature[] features
+  ....
+  #Feature[] getFeatures()
+  #void setFeatures(Feature[])
+}
+
+abstract class Feature {
+  +GeoJSONFeature toGeoJSON()
+  ----
+  -Geometry geometry
+  ....
+  +Geometry getGeometry()
+  #void setGeometry(Geometry)
+}
+
+class Poi extends Feature {
+  -String name
+  -String address
+  ....
+  +String getName()
+  +void setName(String)
+  +String getAddress()
+  +void setAddress(String)
+}
+
+class Itinerary extends Feature {
+  -String name
+  -Poi[] waypoints
+  ....
+  +String getName()
+  +void setName(String)
+  +Poi[] getWaypoints()
+  +void setWaypoints(Poi[])
+}
+
+FeatureCollection o-- Feature
+Itinerary o-left- Poi
+
+@enduml

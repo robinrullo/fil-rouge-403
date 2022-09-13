@@ -69,3 +69,21 @@ bootJar {
     mainClass = 'com.rullo.mulhousetransportrouting.MulhouseTransportRoutingApplication'
     version = '0.1.0'
 }
+
+task installLocalGitHook(type: Copy){
+    from new File(rootProject.rootDir, 'scripts/pre-commit')
+    into { new File(rootProject.rootDir, '.git/hooks')}
+    fileMode 0775
+
+    from new File(rootProject.rootDir, 'scripts/commit-msg')
+    into { new File(rootProject.rootDir, '.git/hooks')}
+    fileMode 0775
+}
+
+task installCommitLint(type: Exec){
+    commandLine 'npm', 'install', '@commitlint/config-conventional', '-g'
+}
+
+
+build.dependsOn installLocalGitHook
+build.dependsOn installCommitLint

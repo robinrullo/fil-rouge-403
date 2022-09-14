@@ -1,8 +1,8 @@
 FROM gradle:jdk17-focal AS build
 COPY --chown=gradle:gradle . /home/gradle/src
 WORKDIR /home/gradle/src
-RUN gradle build -x test --no-daemon
-
+RUN gradle build -x test -x installCommitLint --no-daemon
+RUN rm build/libs/*-plain.jar
 
 FROM openjdk:17-jdk
 

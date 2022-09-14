@@ -2,7 +2,7 @@ version: '3.9'
 services:
   postgres:
     container_name: postgres_container
-    image: postgres
+    image: postgis/postgis:14-3.3
     environment:
       POSTGRES_USER: ${POSTGRES_USER:-postgres}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
@@ -13,7 +13,7 @@ services:
       - "5432:5432"
     networks:
       - network
-    restart: unless-stopped
+    restart: always
 
   pgadmin:
     container_name: pgadmin_container

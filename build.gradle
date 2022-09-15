@@ -63,6 +63,8 @@ dependencies {
     implementation "org.geotools:gt-geojson:${geotoolsVersion}"
     implementation "org.geotools:gt-wps:${geotoolsVersion}"
 
+    implementation 'org.springdoc:springdoc-openapi-ui:1.6.6'
+
     // GeoJSON Serialization
     implementation 'de.grundid.opendatalab:geojson-jackson:1.14'
     compileOnly 'org.projectlombok:lombok'

@@ -3,13 +3,16 @@ plugins {
     id 'io.spring.dependency-management' version '1.0.13.RELEASE'
     id 'java'
     id 'checkstyle'
-    id 'com.github.spotbugs' version "5.0.12"
+}
 
+ext {
+    set('testcontainersVersion', "1.17.3")
+    set('geotoolsVersion', "27.0")
 }
 
 group = 'com.rullo'
-version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '17'
+version = '0.0.1-SNAPSHOT'
 
 configurations {
     compileOnly {
@@ -30,10 +33,6 @@ checkstyleTest {
     source = 'src/test/java'
 }
 
-spotbugs {
-    toolVersion = '4.7.2'
-}
-
 repositories {
     maven {
         url "https://repo.osgeo.org/repository/release/"
@@ -41,14 +40,10 @@ repositories {
     mavenCentral()
 }
 
-ext {
-    set('testcontainersVersion', "1.17.3")
-    set('geotoolsVersion', "27.0")
-}
-
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springdoc:springdoc-openapi-ui:1.6.11'
     implementation 'org.flywaydb:flyway-core'
 
     // Hibernate Spatial
@@ -63,7 +58,7 @@ dependencies {
     implementation "org.geotools:gt-geojson:${geotoolsVersion}"
     implementation "org.geotools:gt-wps:${geotoolsVersion}"
 
-    implementation 'org.springdoc:springdoc-openapi-ui:1.6.6'
+    implementation 'com.graphhopper.external:jackson-datatype-jts:1.0-2.7'
 
     // GeoJSON Serialization
     implementation 'de.grundid.opendatalab:geojson-jackson:1.14'
@@ -75,8 +70,6 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.testcontainers:junit-jupiter'
     testImplementation 'org.testcontainers:postgresql'
-
-    spotbugsPlugins 'com.h3xstream.findsecbugs:findsecbugs-plugin:1.12.0'
 }
 
 dependencyManagement {
@@ -91,23 +84,15 @@ tasks.named('test') {
 
 bootJar {
     mainClass = 'com.rullo.mulhousetransportrouting.MulhouseTransportRoutingApplication'
-    version = '0.1.0'
 }
 
+jar {
+    enabled = false
+}
 task installLocalGitHook(type: Copy) {
     from new File(rootProject.rootDir, 'scripts/pre-commit')
     into { new File(rootProject.rootDir, '.git/hooks') }
     fileMode 0775
-
-    from new File(rootProject.rootDir, 'scripts/commit-msg')
-    into { new File(rootProject.rootDir, '.git/hooks') }
-    fileMode 0775
 }
-
-task installCommitLint(type: Exec) {
-    commandLine 'npm', 'install', '@commitlint/config-conventional', '-g'
-}
-
 
 build.dependsOn installLocalGitHook
-build.dependsOn installCommitLint

@@ -8,11 +8,9 @@ spring:
       max-lifetime: 1000 # maximum lifetime in milliseconds of a connection in the pool after it is closed.
       minimum-idle: 1 # minimum number of idle connections maintained by HikariCP in a connection pool
       maximum-pool-size: 3 # maximum pool size
-    url: jdbc:postgresql://localhost:5432/gis
+    url: jdbc:postgresql://postgres:5432/gis
     username: postgres
     password: postgres
-  profiles:
-    active: default
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQL10Dialect
     hibernate:
@@ -29,3 +27,23 @@ spring:
     baseline-on-migrate: true
 server:
   port: 8080
+
+transport-routing:
+  routingDbHost: postgres
+  routingDbPort: 5432
+  routingDbUser: postgres
+  routingDbPassword: postgres
+  routingDbDatabase: osm
+  routingDbSchema: public
+  routingDbTable: gh_roads
+  routingBounds:
+    - - 7.258872985839843
+      - 47.70410131286579
+    - - 7.416629791259765
+      - 47.70410131286579
+    - - 7.416629791259765
+      - 47.792284775391956
+    - - 7.258872985839843
+      - 47.792284775391956
+    - - 7.258872985839843
+      - 47.70410131286579

@@ -1,0 +1,35 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/gis
+    username: postgres
+    password: postgres
+  flyway:
+    enabled: false
+    baseline-on-migrate: true
+
+transport-routing:
+  routingDbHost: localhost
+  routingDbPort: 5432
+  routingDbUser: postgres
+  routingDbPassword: postgres
+  routingDbDatabase: osm
+  routingDbSchema: public
+  routingDbTable: gh_roads
+  routingDbGeometryColumn: geom
+  routingBounds:
+    - - 7.258872985839843
+      - 47.70410131286579
+    - - 7.416629791259765
+      - 47.70410131286579
+    - - 7.416629791259765
+      - 47.792284775391956
+    - - 7.258872985839843
+      - 47.792284775391956
+    - - 7.258872985839843
+      - 47.70410131286579
+
+logging:
+  level:
+    com:
+      rullo:
+        mulhousetransportrouting: DEBUG

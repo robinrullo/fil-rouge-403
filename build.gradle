@@ -7,11 +7,16 @@ plugins {
 
 ext {
     set('testcontainersVersion', "1.17.3")
-    set('geotoolsVersion', "27.0")
+    set('geotoolsVersion', "23.0")
+    set('JTSVersion', "1.16.1")
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
 }
 
 group = 'com.rullo'
-sourceCompatibility = '17'
 version = '0.0.1-SNAPSHOT'
 
 configurations {
@@ -21,7 +26,7 @@ configurations {
 }
 
 checkstyle {
-    toolVersion '7.8.1'
+    toolVersion '10.3.1'
     configFile file("checkstyle.xml")
 }
 
@@ -47,21 +52,19 @@ dependencies {
     implementation 'org.flywaydb:flyway-core'
 
     // Hibernate Spatial
-    implementation 'org.hibernate:hibernate-spatial:5.6.9.Final'
+    implementation 'org.hibernate:hibernate-spatial:5.4.8.Final'
 
     // GeoTools
-    implementation "org.geotools.jdbc:gt-jdbc-postgis:22.2"
+    implementation "org.geotools.jdbc:gt-jdbc-postgis:${geotoolsVersion}"
     implementation "org.geotools:gt-main:${geotoolsVersion}"
-    implementation "org.geotools:gt-referencing:${geotoolsVersion}"
     implementation "org.geotools:gt-epsg-hsql:${geotoolsVersion}"
-    implementation "org.geotools:gt-epsg-extension:${geotoolsVersion}"
-    implementation "org.geotools:gt-geojson:${geotoolsVersion}"
-    implementation "org.geotools:gt-wps:${geotoolsVersion}"
 
-    implementation 'com.graphhopper.external:jackson-datatype-jts:1.0-2.7'
+    implementation 'com.graphhopper.external:jackson-datatype-jts:'
+    implementation "org.locationtech.jts.io:jts-io-common:${JTSVersion}"
+    implementation "org.locationtech.jts:jts-core:${JTSVersion}"
 
-    // GeoJSON Serialization
-    implementation 'de.grundid.opendatalab:geojson-jackson:1.14'
+    implementation 'com.graphhopper:graphhopper-core:4.0'
+
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     runtimeOnly 'org.postgresql:postgresql'

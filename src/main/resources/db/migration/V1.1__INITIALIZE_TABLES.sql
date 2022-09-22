@@ -23,4 +23,6 @@ create table public.itineraries
 );
 
 alter table public.waypoints_itineraries
-    add constraint fk_poi_itinerary foreign key (itinerary_id) references public.itineraries
+    add constraint fk_poi_itinerary foreign key (itinerary_id) references public.itineraries;
+
+create sequence public.hibernate_sequence;

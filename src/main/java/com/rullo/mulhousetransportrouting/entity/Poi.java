@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.locationtech.jts.geom.Point;
 
 /**
  * POI Entity.
@@ -18,7 +19,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "pois")
-public class Poi extends Feature {
+public class Poi extends Feature<Point> {
 
   @Column(name = "name", nullable = false)
   private String name;

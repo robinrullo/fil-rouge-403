@@ -1,16 +1,15 @@
 package com.rullo.mulhousetransportrouting.service;
 
-import static com.graphhopper.util.Parameters.Routing.CALC_POINTS;
 import static com.graphhopper.util.Parameters.Routing.INSTRUCTIONS;
 import static com.graphhopper.util.Parameters.Routing.WAY_POINT_MAX_DISTANCE;
 
 import com.graphhopper.GHRequest;
 import com.graphhopper.GHResponse;
 import com.graphhopper.GraphHopper;
-import com.graphhopper.jackson.ResponsePathSerializer;
 import com.graphhopper.util.StopWatch;
 import com.graphhopper.util.shapes.GHPoint;
 import com.rullo.mulhousetransportrouting.components.graphhopper.GraphhopperComponent;
+import com.rullo.mulhousetransportrouting.entity.dto.ItineraryResponse;
 import com.rullo.mulhousetransportrouting.entity.dto.RouteRequest;
 import com.rullo.mulhousetransportrouting.service.errors.CoordinateTransformationError;
 import com.rullo.mulhousetransportrouting.service.errors.GraphhopperRoutingFailureError;
@@ -72,23 +71,22 @@ public class RoutingService {
       }
       return new GHPoint(transformedPoint.getCentroid().getY(),
           transformedPoint.getCentroid().getX());
-
-
     }).forEach(request::addPoint);
+
     request.setLocale(Locale.FRANCE);
     request.setProfile(routeRequest.profile());
-    request.getHints()
-        .putObject(INSTRUCTIONS, true)
+    request.getHints().putObject(INSTRUCTIONS, true)
         //.putObject(CALC_POINTS, true)
         .putObject(WAY_POINT_MAX_DISTANCE, 1);
 
     GHResponse response = this.graphhopperApi.route(request);
     if (!response.hasErrors()) {
-      log.info("Routing success: {}", response.getDebugInfo());
-      return ResponsePathSerializer.jsonObject(response, true, true, true, false,
-          sw.stop().getMillis());
+      log.info("Routing success: {}, took {}", response.getDebugInfo(), sw.stop().getMillis());
+
+      return new ItineraryResponse(response.getBest().getPoints().toLineString(true),
+          response.getBest().getDistance(), response.getBest().getTime());
     } else {
-      log.error("Error while routing: {}", response.getErrors());
+      log.error("Error while routing: {}, took {}", response.getErrors(), sw.stop().getMillis());
       throw new GraphhopperRoutingFailureError(response.getErrors());
     }
   }

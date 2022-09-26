@@ -11,12 +11,13 @@ abstract class FeatureCollection {
 }
 
 abstract class Feature {
-  +GeoJSONFeature toGeoJSON()
-  ----
   -Geometry geometry
+  -Properties properties
   ....
-  +Geometry getGeometry()
+  #Geometry getGeometry()
   #void setGeometry(Geometry)
+  #Properties getProperties()
+  #void setProperties(Properties)
 }
 
 class Poi extends Feature {
@@ -29,17 +30,20 @@ class Poi extends Feature {
   +void setAddress(String)
 }
 
-class Itinerary extends Feature {
-  -String name
-  -Poi[] waypoints
+class ItineraryResponse {
+  -Feature<Itinerary> itineraryFeature
+  -Double distance
+  -Double time
   ....
-  +String getName()
-  +void setName(String)
-  +Poi[] getWaypoints()
-  +void setWaypoints(Poi[])
+  +Feature<Itinerary> getItineraryFeature()
+  +void setItineraryFeature(Feature<Itinerary>)
+  +Double getDistance()
+  +void setDistance(Double)
+  +Double getTime()
+  +void setTime(Double)
 }
 
 FeatureCollection o-- Feature
-Itinerary o-left- Poi
+
 
 @enduml

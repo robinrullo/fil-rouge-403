@@ -87,7 +87,7 @@ tasks.named('test') {
 }
 
 bootJar {
-    mainClass = 'com.rullo.mulhousetransportrouting.MulhouseTransportRoutingApplication'
+    mainClass = 'com.rullo.transportrouting.TransportRoutingApplication'
 }
 
 jar {

@@ -9,6 +9,8 @@ ext {
     set('testcontainersVersion', "1.17.3")
     set('geotoolsVersion', "23.0")
     set('JTSVersion', "1.16.1")
+    set('springdocOpenAPIVersion', "1.6.11")
+
 }
 
 java {
@@ -48,22 +50,18 @@ repositories {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation("org.springframework.boot:spring-boot-starter-data-rest")
-    implementation 'org.springdoc:springdoc-openapi-ui:1.6.11'
+    implementation 'org.springframework.boot:spring-boot-starter-data-rest'
     implementation 'org.flywaydb:flyway-core'
+    implementation "org.springdoc:springdoc-openapi-ui:${springdocOpenAPIVersion}"
+    implementation "org.springdoc:springdoc-openapi-data-rest:${springdocOpenAPIVersion}"
 
-    // Hibernate Spatial
     implementation 'org.hibernate:hibernate-spatial:5.4.8.Final'
-
-    // GeoTools
     implementation "org.geotools.jdbc:gt-jdbc-postgis:${geotoolsVersion}"
     implementation "org.geotools:gt-main:${geotoolsVersion}"
     implementation "org.geotools:gt-epsg-hsql:${geotoolsVersion}"
-
     implementation 'com.graphhopper.external:jackson-datatype-jts:'
     implementation "org.locationtech.jts.io:jts-io-common:${JTSVersion}"
     implementation "org.locationtech.jts:jts-core:${JTSVersion}"
-
     implementation 'com.graphhopper:graphhopper-core:4.0'
 
     compileOnly 'org.projectlombok:lombok'

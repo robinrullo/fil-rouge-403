@@ -26,9 +26,13 @@ package com.rullo.transportrouting.components.graphhopper;
  */
 public class Utils {
 
+  private Utils() {
+    throw new IllegalStateException("Utility class");
+  }
+
   /**
    * Convert a throwable to a runtime exception.
-
+   *
    * @param e the throwable
    * @return the runtime exception
    */

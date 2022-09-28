@@ -50,7 +50,7 @@ public class RoutingService {
    * @param routeRequest request body.
    * @return routing response.
    */
-  public Object getRouting(RouteRequest routeRequest) {
+  public ItineraryResponse getRouting(RouteRequest routeRequest) {
     StopWatch sw = new StopWatch().start();
     GHRequest request = new GHRequest();
 
